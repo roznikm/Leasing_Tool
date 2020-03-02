@@ -57,6 +57,16 @@ export default function(state = initialState, action) {
       return {
         ...state
       };
+    case DELETE_LEASE:
+      return {
+        ...state,
+        leases: state.leases.filter(lease => lease._id !== action.payload)
+      };
+      case ADD_LEASE:
+        return {
+          ...state,
+          leases: [action.payload, ...state.leases]
+        };
     default:
       return state;
   }

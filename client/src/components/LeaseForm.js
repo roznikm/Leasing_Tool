@@ -10,6 +10,10 @@ import {
   Input,
   FormText
 } from 'reactstrap';
+import { connect } from 'react-redux';
+import { addLease } from '../actions/leaseActions';
+import { v4 as uuid } from 'uuid';
+import PropTypes from 'prop-types';
 
 class LeaseForm extends Component {
   state = {
@@ -22,8 +26,8 @@ class LeaseForm extends Component {
     pst: 0.06,
     term_months: 48,
     start_date: '',
-    payment_frequency: 'WEEKLY',
-    lease_type: 'NEW'
+    payment_frequency: 'Weekly',
+    lease_type: 'New'
   };
 
   toggle = () => {
@@ -40,11 +44,21 @@ class LeaseForm extends Component {
     e.preventDefault();
 
     const newLease = {
-      name: this.state.name
+      _id: uuid(),
+      name: this.state.name,
+      net_lease_price: this.state.net_lease_price,
+      residual_value: this.state.residual_value,
+      lease_rate_annual: this.state.lease_rate_annual,
+      gst: this.state.gst,
+      pst: this.state.pst,
+      term_months: this.state.term_months,
+      start_date: this.state.start_date,
+      payment_frequency: this.state.payment_frequency,
+      lease_type: this.state.lease_type
     };
 
-    // Add item via addItem action
-    this.props.addItem(newLease);
+    // Add lease via addLease action
+    this.props.addLease(newLease);
 
     // Close modal
     this.toggle();
@@ -62,7 +76,9 @@ class LeaseForm extends Component {
         </Button>
 
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Add to lease portfolio</ModalHeader>
+          <ModalHeader toggle={this.toggle}>
+            Add a lease to the portfolio
+          </ModalHeader>
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
@@ -70,8 +86,8 @@ class LeaseForm extends Component {
                 <Input
                   type='text'
                   name='name'
-                  id='lease'
-                  placeholder='Name'
+                  id='name'
+                  placeholder='Customer name'
                   onChange={this.onChange}
                 />
               </FormGroup>
@@ -81,8 +97,8 @@ class LeaseForm extends Component {
                   type='number'
                   step='1'
                   min='0'
-                  net_lease_price='net_lease_price'
-                  id='lease'
+                  name='net_lease_price'
+                  id='net_lease_price'
                   placeholder='0'
                   onChange={this.onChange}
                 />
@@ -93,8 +109,8 @@ class LeaseForm extends Component {
                   type='number'
                   step='1'
                   min='0'
-                  residual_value='Residual value'
-                  id='lease'
+                  name='residual_value'
+                  id='residual_value'
                   placeholder='0'
                   onChange={this.onChange}
                 />
@@ -103,11 +119,12 @@ class LeaseForm extends Component {
                 <Label for='lease_rate_annual'>Lease annual rate</Label>
                 <Input
                   type='number'
-                  step='1'
+                  step='0.001'
+                  max='0.15'
                   min='0'
-                  lease_rate_annual='Lease annual rate'
-                  id='lease'
-                  placeholder='0'
+                  name='Lease annual rate'
+                  id='lease_rate_annual'
+                  placeholder='0.050'
                   onChange={this.onChange}
                 />
               </FormGroup>
@@ -115,11 +132,12 @@ class LeaseForm extends Component {
                 <Label for='gst'>GST</Label>
                 <Input
                   type='number'
-                  step='0.001'
+                  step= '0.001'
+                  max='0.15'
                   min='0'
-                  gst='GST'
-                  id='lease'
-                  placeholder='0.05'
+                  name='GST'
+                  id='gst'
+                  placeholder='0.050'
                   onChange={this.onChange}
                 />
               </FormGroup>
@@ -128,10 +146,11 @@ class LeaseForm extends Component {
                 <Input
                   type='number'
                   step='0.001'
+                  max='0.15'
                   min='0'
-                  pst='PST'
-                  id='lease'
-                  placeholder='0.08'
+                  name='pst'
+                  id='pst'
+                  placeholder='0.080'
                   onChange={this.onChange}
                 />
               </FormGroup>
@@ -141,8 +160,8 @@ class LeaseForm extends Component {
                   type='number'
                   step='1'
                   min='0'
-                  term_months='Term Months'
-                  id='lease'
+                  name='term_months'
+                  id='term_months'
                   placeholder='48'
                   onChange={this.onChange}
                 />
@@ -151,8 +170,8 @@ class LeaseForm extends Component {
                 <Label for='start_date'>Start date</Label>
                 <Input
                   type='date'
-                  start_date='Start date'
-                  id='lease'
+                  name='start_date'
+                  id='start_date'
                   placeholder='date placeholder'
                   onChange={this.onChange}
                 />
@@ -161,8 +180,8 @@ class LeaseForm extends Component {
                 <Label for='payment_frequency'>Payment Frequency</Label>
                 <Input
                   type='select'
-                  name='select'
-                  id='lease'
+                  name='payment_frequency'
+                  id='payment_frequency'
                   onChange={this.onChange}
                 >
                   <option>Weekly</option>
@@ -174,8 +193,8 @@ class LeaseForm extends Component {
                 <Label for='lease_type'>Lease type</Label>
                 <Input
                   type='select'
-                  name='select'
-                  id='lease'
+                  name='lease_type'
+                  id='lease_type'
                   onChange={this.onChange}
                 >
                   <option>New</option>
@@ -196,4 +215,12 @@ class LeaseForm extends Component {
   }
 }
 
-export default LeaseForm;
+LeaseForm.propTypes = {
+  addLease: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  leases: state.lease
+});
+
+export default connect(mapStateToProps, { addLease })(LeaseForm);
