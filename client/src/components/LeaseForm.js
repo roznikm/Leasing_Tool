@@ -12,7 +12,6 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { addLease } from '../actions/leaseActions';
-import { v4 as uuid } from 'uuid';
 import PropTypes from 'prop-types';
 
 class LeaseForm extends Component {
@@ -44,7 +43,6 @@ class LeaseForm extends Component {
     e.preventDefault();
 
     const newLease = {
-      _id: uuid(),
       name: this.state.name,
       net_lease_price: this.state.net_lease_price,
       residual_value: this.state.residual_value,

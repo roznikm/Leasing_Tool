@@ -9,8 +9,8 @@ class LeaseTable extends Component {
     this.props.getLeases();
   }
 
-  onDeleteClick = id => {
-    this.props.deleteLease(id);
+  onDeleteClick = _id => {
+    this.props.deleteLease(_id);
   };
 
   render() {
