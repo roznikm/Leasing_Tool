@@ -9,6 +9,7 @@ import './App.css';
 
 import LeaseTable from './components/LeaseTable';
 import LeaseForm from './components/LeaseForm';
+import TableMaterial from './components/TableMaterial'; 
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <AppNavbar />
         <Container>
           <LeaseForm />
-          <LeaseTable />
+          <TableMaterial />
         </Container>
       </div>
     </Provider>
