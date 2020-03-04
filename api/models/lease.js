@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'); 
 
-const leaseSchema = mongoose.Schema({
+const leaseSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true},
     net_lease_price: { type: Number, required: true },

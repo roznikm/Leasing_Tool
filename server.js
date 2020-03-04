@@ -1,8 +1,32 @@
-const http = require('http');
-const app = require('./app');
+const path = require('path');
+const express = require('express');
+const dotenv = require('dotenv');
+const colors = require('colors');
+const morgan = require('morgan');
+const connectDB = require('./config/db');
 
-const port = process.env.PORT || 7000;
+dotenv.config({ path: './config/config.env' });
 
-const server = http.createServer(app);
+connectDB();
 
-server.listen(port, () => console.log(`Sever started on port ${port}`)); 
+const leaseRoutes = require('./api/routes/leases');
+
+const app = express();
+
+app.use(express.json());
+
+if(process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
+app.use('/leases', leaseRoutes);
+
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')));
+}
+
+const PORT = process.env.PORT || 7000;
+
+app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold));

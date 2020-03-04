@@ -1,7 +1,5 @@
 import React from 'react';
 import AppNavbar from './components/AppNavbar';
-import { Provider } from 'react-redux';
-import store from './store';
 import { Container } from 'reactstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,11 +11,10 @@ import TableMaterial from './components/TableMaterial';
 
 import About from './components/About';
 import Home from './components/Home';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <Provider store={store}>
       <Router>
         <div className='App'>
           <AppNavbar />
@@ -30,7 +27,6 @@ function App() {
         </div>
         <Route path='/report' component={Report} />
       </Router>
-    </Provider>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Button,
   Modal,
@@ -10,215 +10,197 @@ import {
   Input,
   FormText
 } from 'reactstrap';
-import { connect } from 'react-redux';
-import { addLease } from '../actions/leaseActions';
 import PropTypes from 'prop-types';
+import { GlobalContext } from '../context/GlobalState';
 
-class LeaseForm extends Component {
-  state = {
-    modal: false,
-    name: '',
-    net_lease_price: 0,
-    residual_value: 0,
-    lease_rate_annual: 0,
-    gst: 0.05,
-    pst: 0.06,
-    term_months: 48,
-    start_date: '',
-    payment_frequency: 'Weekly',
-    lease_type: 'New'
+const LeaseForm = () => {
+  const [modal, setModal] = useState(false);
+  const [name, setName] = useState('');
+  const [start_date, setStartDate] = useState('');
+  const [net_lease_price, setNetLeasePrice] = useState(0);
+  const [residual_value, setResidualValue] = useState(0);
+  const [lease_rate_annual, setLeaseRateAnnual] = useState(0);
+  const [gst, setGst] = useState(0.05);
+  const [pst, setPst] = useState(0.06);
+  const [term_months, setTermMonths] = useState(48);
+  const [payment_frequency, setPaymentFrequency] = useState('Weekly');
+  const [lease_type, setLeaseType] = useState('NEW');
+
+  const { addLease } = useContext(GlobalContext);
+
+  const toggle = () => {
+    setModal(!modal);
   };
 
-  toggle = () => {
-    this.setState({
-      modal: !this.state.modal
-    });
-  };
-
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  onSubmit = e => {
+  const onSubmit = e => {
     e.preventDefault();
 
     const newLease = {
-      name: this.state.name,
-      net_lease_price: this.state.net_lease_price,
-      residual_value: this.state.residual_value,
-      lease_rate_annual: this.state.lease_rate_annual,
-      gst: this.state.gst,
-      pst: this.state.pst,
-      term_months: this.state.term_months,
-      start_date: this.state.start_date,
-      payment_frequency: this.state.payment_frequency,
-      lease_type: this.state.lease_type
+      _id: 1,
+      name,
+      net_lease_price,
+      residual_value,
+      lease_rate_annual,
+      gst,
+      pst,
+      term_months,
+      start_date,
+      payment_frequency,
+      lease_type
     };
 
     // Add lease via addLease action
-    this.props.addLease(newLease);
+    addLease(newLease);
 
     // Close modal
-    this.toggle();
+    toggle();
   };
 
-  render() {
-    return (
-      <div>
-        <Button
-          color='dark'
-          style={{ marginBottom: '2rem' }}
-          onClick={this.toggle}
-        >
-          Add Lease
-        </Button>
+  return (
+    <div>
+      <Button color='dark' style={{ marginBottom: '2rem' }} onClick={toggle}>
+        Add Lease
+      </Button>
 
-        <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>
-            Add a lease to the portfolio
-          </ModalHeader>
-          <ModalBody>
-            <Form onSubmit={this.onSubmit}>
-              <FormGroup>
-                <Label for='name'>Customer Name</Label>
-                <Input
-                  type='text'
-                  name='name'
-                  id='name'
-                  placeholder='Customer name'
-                  onChange={this.onChange}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for='net_lease_price'>Net lease price</Label>
-                <Input
-                  type='number'
-                  step='1'
-                  min='0'
-                  name='net_lease_price'
-                  id='net_lease_price'
-                  placeholder='0'
-                  onChange={this.onChange}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for='residual_value'>Residual value</Label>
-                <Input
-                  type='number'
-                  step='1'
-                  min='0'
-                  name='residual_value'
-                  id='residual_value'
-                  placeholder='0'
-                  onChange={this.onChange}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for='lease_rate_annual'>Lease annual rate</Label>
-                <Input
-                  type='number'
-                  step='0.001'
-                  max='0.15'
-                  min='0'
-                  name='Lease annual rate'
-                  id='lease_rate_annual'
-                  placeholder='0.050'
-                  onChange={this.onChange}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for='gst'>GST</Label>
-                <Input
-                  type='number'
-                  step= '0.001'
-                  max='0.15'
-                  min='0'
-                  name='GST'
-                  id='gst'
-                  placeholder='0.050'
-                  onChange={this.onChange}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for='pst'>PST</Label>
-                <Input
-                  type='number'
-                  step='0.001'
-                  max='0.15'
-                  min='0'
-                  name='pst'
-                  id='pst'
-                  placeholder='0.080'
-                  onChange={this.onChange}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for='term_months'>Term Months</Label>
-                <Input
-                  type='number'
-                  step='1'
-                  min='0'
-                  name='term_months'
-                  id='term_months'
-                  placeholder='48'
-                  onChange={this.onChange}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for='start_date'>Start date</Label>
-                <Input
-                  type='date'
-                  name='start_date'
-                  id='start_date'
-                  placeholder='date placeholder'
-                  onChange={this.onChange}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for='payment_frequency'>Payment Frequency</Label>
-                <Input
-                  type='select'
-                  name='payment_frequency'
-                  id='payment_frequency'
-                  onChange={this.onChange}
-                >
-                  <option>Weekly</option>
-                  <option>Biweekly</option>
-                  <option>Monthly</option>
-                </Input>
-              </FormGroup>
-              <FormGroup>
-                <Label for='lease_type'>Lease type</Label>
-                <Input
-                  type='select'
-                  name='lease_type'
-                  id='lease_type'
-                  onChange={this.onChange}
-                >
-                  <option>New</option>
-                  <option>Used</option>
-                  <option>Short</option>
-                </Input>
-              </FormGroup>
-              <FormGroup>
-                <Button color='dark' style={{ marginTop: '2rem' }} block>
-                  Add Lease
-                </Button>
-              </FormGroup>
-            </Form>
-          </ModalBody>
-        </Modal>
-      </div>
-    );
-  }
-}
-
-LeaseForm.propTypes = {
-  addLease: PropTypes.func.isRequired,
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>Add a lease to the portfolio</ModalHeader>
+        <ModalBody>
+          <Form onSubmit={onSubmit}>
+            <FormGroup>
+              <Label for='name'>Customer Name</Label>
+              <Input
+                type='text'
+                name='name'
+                id='name'
+                placeholder='Customer name'
+                onChange={e => setName(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for='net_lease_price'>Net lease price</Label>
+              <Input
+                type='number'
+                step='1'
+                min='0'
+                name='net_lease_price'
+                id='net_lease_price'
+                placeholder='0'
+                onChange={e => setNetLeasePrice(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for='residual_value'>Residual value</Label>
+              <Input
+                type='number'
+                step='1'
+                min='0'
+                name='residual_value'
+                id='residual_value'
+                placeholder='0'
+                onChange={e => setResidualValue(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for='lease_rate_annual'>Lease annual rate</Label>
+              <Input
+                type='number'
+                step='0.001'
+                max='0.15'
+                min='0'
+                name='Lease annual rate'
+                id='lease_rate_annual'
+                placeholder='0.050'
+                onChange={e => setLeaseRateAnnual(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for='gst'>GST</Label>
+              <Input
+                type='number'
+                step='0.001'
+                max='0.15'
+                min='0'
+                name='GST'
+                id='gst'
+                placeholder='0.050'
+                onChange={e => setGst(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for='pst'>PST</Label>
+              <Input
+                type='number'
+                step='0.001'
+                max='0.15'
+                min='0'
+                name='pst'
+                id='pst'
+                placeholder='0.080'
+                onChange={e => setPst(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for='term_months'>Term Months</Label>
+              <Input
+                type='number'
+                step='1'
+                min='0'
+                name='term_months'
+                id='term_months'
+                placeholder='48'
+                onChange={e => setTermMonths(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for='start_date'>Start date</Label>
+              <Input
+                type='date'
+                name='start_date'
+                id='start_date'
+                placeholder='date placeholder'
+                onChange={e => setStartDate(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for='payment_frequency'>Payment Frequency</Label>
+              <Input
+                type='select'
+                name='payment_frequency'
+                id='payment_frequency'
+                onChange={e => setPaymentFrequency(e.target.value)}
+              >
+                <option>Weekly</option>
+                <option>Biweekly</option>
+                <option>Monthly</option>
+              </Input>
+            </FormGroup>
+            <FormGroup>
+              <Label for='lease_type'>Lease type</Label>
+              <Input
+                type='select'
+                name='lease_type'
+                id='lease_type'
+                onChange={e => setLeaseType(e.target.value)}
+              >
+                <option>New</option>
+                <option>Used</option>
+                <option>Short</option>
+              </Input>
+            </FormGroup>
+            <FormGroup>
+              <Button color='dark' style={{ marginTop: '2rem' }} block>
+                Add Lease
+              </Button>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+      </Modal>
+    </div>
+  );
 };
 
-const mapStateToProps = state => ({
-  leases: state.lease
-});
+export default LeaseForm;
 
-export default connect(mapStateToProps, { addLease })(LeaseForm);
+// LeaseForm.propTypes = {
+//   addLease: PropTypes.func.isRequired,
+// };
