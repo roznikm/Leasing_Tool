@@ -1,3 +1,4 @@
+const mongoose = require('mongoose'); 
 const Lease = require('../models/Lease');
 
 // @desc    Get all leases
@@ -20,7 +21,7 @@ exports.getLeases = async (req, res, next) => {
 };
 
 // @desc    Add lease
-// @route   POST /api/leases
+// @route   POST /leases
 // @access  Public
 exports.addLease = async (req, res, next) => {
   try {
@@ -39,7 +40,7 @@ exports.addLease = async (req, res, next) => {
 
     const lease = await Lease.create(req.body);
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       leases: lease
     });

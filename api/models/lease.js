@@ -1,7 +1,6 @@
 const mongoose = require('mongoose'); 
 
 const leaseSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true},
     net_lease_price: { type: Number, required: true },
     residual_value: { type: Number, required: true },

@@ -56,12 +56,27 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
-  function addLease(item) {
-    dispatch({
-      type: 'ADD_LEASE',
-      payload: item
-    });
+  async function addLease(lease) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json' 
+      }
+    }
+
+    try {
+      const res = await axios.post('/leases', lease, config);
+      dispatch({
+        type: 'ADD_LEASE',
+        payload: res.data.leases
+      });
+    } catch (error) {
+      dispatch({
+        type: 'LEASE_ERROR',
+        payload: error.response.data.error
+      });
+    }
   }
+
   return (
     <GlobalContext.Provider
       value={{

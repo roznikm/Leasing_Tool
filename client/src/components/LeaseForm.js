@@ -36,7 +36,6 @@ const LeaseForm = () => {
     e.preventDefault();
 
     const newLease = {
-      _id: 1,
       name,
       net_lease_price,
       residual_value,
@@ -48,7 +47,7 @@ const LeaseForm = () => {
       payment_frequency,
       lease_type
     };
-
+console.log(newLease)
     // Add lease via addLease action
     addLease(newLease);
 
@@ -107,7 +106,7 @@ const LeaseForm = () => {
                 step='0.001'
                 max='0.15'
                 min='0'
-                name='Lease annual rate'
+                name='Lease_annual_rate'
                 id='lease_rate_annual'
                 placeholder='0.050'
                 onChange={e => setLeaseRateAnnual(e.target.value)}
@@ -120,7 +119,7 @@ const LeaseForm = () => {
                 step='0.001'
                 max='0.15'
                 min='0'
-                name='GST'
+                name='gst'
                 id='gst'
                 placeholder='0.050'
                 onChange={e => setGst(e.target.value)}
