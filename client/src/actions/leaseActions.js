@@ -1,9 +1,7 @@
 import axios from 'axios';
 import {
   GET_LEASES,
-  GET_LEASE,
   ADD_LEASE,
-  EDIT_LEASE,
   DELETE_LEASE,
   LEASES_LOADING
 } from './types';

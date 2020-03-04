@@ -1,9 +1,6 @@
-import { v4 as uuid } from 'uuid';
 import {
   GET_LEASES,
-  GET_LEASE,
   ADD_LEASE,
-  EDIT_LEASE,
   DELETE_LEASE,
   LEASES_LOADING
 } from '../actions/types';

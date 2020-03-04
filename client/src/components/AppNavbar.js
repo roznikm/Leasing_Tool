@@ -30,6 +30,15 @@ const AppNavbar = props => {
                   Github Repo
                 </NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink href="/about">About</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/">Home</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/portfolio">Portfolio</NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Container>

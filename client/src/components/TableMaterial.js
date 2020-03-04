@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import MUIDataTable from 'mui-datatables';
 import { connect } from 'react-redux';
 import { getLeases, deleteLease } from '../actions/leaseActions';
+import Report from '../components/Report'; 
 import PropTypes from 'prop-types';
 
 class TableMaterial extends Component {
+
+  state = {
+    selected_id: ''
+  }
+
   componentDidMount() {
     this.props.getLeases();
   }
@@ -69,7 +75,11 @@ class TableMaterial extends Component {
         this.props.deleteLease(dat._id);
       },
       onRowClick: index => {
-          console.log(index[0]); 
+        const id = index[0]; 
+        this.setState({
+          selected_id: id
+        });
+        // window.location.href='/report';
       }
     };
     return (
