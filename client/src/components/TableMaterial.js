@@ -1,18 +1,17 @@
 import React, { useContext, useEffect } from 'react';
 import MUIDataTable from 'mui-datatables';
-import Report from '../components/Report';
 import PropTypes from 'prop-types';
 import { GlobalContext } from '../context/GlobalState';
 
 // expansion panel imports
-import { makeStyles } from '@material-ui/core/styles';
 import {
   ExpansionPanel,
   ExpansionPanelSummary,
-  ExpansionPanelDetails
+  ExpansionPanelDetails,
+  makeStyles,
+  Typography
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Typography from '@material-ui/core/Typography';
 
 // expansion panel
 const useStyles = makeStyles(theme => ({

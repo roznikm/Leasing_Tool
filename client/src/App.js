@@ -1,31 +1,25 @@
 import React from 'react';
-import AppNavbar from './components/AppNavbar';
-import { Container } from 'reactstrap';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import Report from './components/Report';
-import LeaseForm from './components/LeaseForm';
-import TableMaterial from './components/TableMaterial';
-
-import About from './components/About';
-import Home from './components/Home';
+import Insight from './Components/Layout/Insights';
+import Portfolio from './Components/Layout/Portfolio';
+import About from './Components/Layout/About';
+import Home from './Components/Layout/Home';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import AppNavbarMaterial from './Components/Layout/AppNavbarMaterial';
+
 
 function App() {
   return (
       <Router>
         <div className='App'>
-          <AppNavbar />
+          <AppNavbarMaterial />
           <Route path='/' exact component={Home} />
-          <Route path='/about' component={About} />
-          <Container>
-            <Route path='/portfolio' component={LeaseForm} />
-            <Route path='/portfolio' component={TableMaterial} />
-          </Container>
+          <Route path='/about' exact component={About} />
+          <Route path='/insights' exact component={Insight} />
+          <Route path='/leases' exact component={Portfolio} />
+
         </div>
-        <Route path='/report' component={Report} />
       </Router>
   );
 }
