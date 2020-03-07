@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
+const cors = require('cors')
 
 dotenv.config({ path: './config/config.env' });
 
@@ -14,7 +15,7 @@ const leaseRoutes = require('./api/routes/leases');
 const app = express();
 
 app.use(express.json());
-
+app.use(cors()); 
 if(process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }

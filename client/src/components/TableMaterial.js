@@ -9,14 +9,20 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
   makeStyles,
-  Typography
+  hexToRgb
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import color from '@material-ui/core/colors/amber';
 
 // expansion panel
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%'
+    backgroundColor: "#FF000",
+    width: '90%',
+    height: '90%',
+    outlineStyle: 'solid',
+    outlineWidth: 1,
+    outlineColor: 'rgb(33.7%, 37%, 33.7%)'
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -88,6 +94,7 @@ const TableMaterial = () => {
     filterType: 'dropdown',
     responsive: 'scroll',
     selectableRows: 'single',
+    elevation: 0,
     onRowsDelete: index => {
       const dat = leases[index.data['0'].index];
       deleteLease(dat._id);
@@ -100,22 +107,20 @@ const TableMaterial = () => {
   };
 
   return (
-    <ExpansionPanel>
+    <ExpansionPanel elevation={0} defaultExpanded={true}>
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <Typography className={classes.heading}>
-          Show lease portfolio
-        </Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <MUIDataTable
-          title={'Lease Portfolio'}
+          title={'Explore Leases'}
           data={leases}
           columns={columns}
           options={options}
+          className={classes.root}
         />
       </ExpansionPanelDetails>
     </ExpansionPanel>

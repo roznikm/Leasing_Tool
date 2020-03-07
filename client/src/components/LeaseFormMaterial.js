@@ -1,9 +1,9 @@
-import React, { useState } from './node_modules/react';
+import React, { useState } from 'react';
 import '../App.css';
-import { makeStyles } from './node_modules/@material-ui/core/styles';
-import TextField from './node_modules/@material-ui/core/TextField';
-import Container from './node_modules/@material-ui/core/Container';
-import CssBaseline from './node_modules/@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 
 const useStyles = makeStyles(theme => ({

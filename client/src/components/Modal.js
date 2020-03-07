@@ -1,9 +1,9 @@
-import React from './node_modules/react';
-import Button from './node_modules/@material-ui/core/Button';
-import { makeStyles } from './node_modules/@material-ui/core/styles';
-import Modal from './node_modules/@material-ui/core/Modal';
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 import LeaseFormMaterial from './LeaseFormMaterial';
-import Container from './node_modules/@material-ui/core/Container';
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
   modal: {

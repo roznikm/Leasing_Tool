@@ -54,14 +54,14 @@ export default function AppNavBarMaterial() {
             </Button>
           <Button className={classes.button} 
           color="inherit" 
-          size='small'
+          size='large'
           href= '/insights'>
             <AssessmentIcon/>Insights
             </Button>
           <Button 
           className={classes.button} 
           color="inherit" 
-          size='small'
+          size='large'
           href='/leases'>
             <StorageIcon/>
             Lease Portfolio
@@ -69,14 +69,14 @@ export default function AppNavBarMaterial() {
           <Button 
           className={classes.button} 
           color='inherit' 
-          size='small' 
+          size='large' 
           href='/about'>
             <InfoIcon/> About
             </Button>
           <Button 
           className={classes.button} 
           color="inherit" 
-          size='small' 
+          size='large' 
           href='login'>
             <LockOpenOutlinedIcon/> Login</Button>
         </Toolbar>

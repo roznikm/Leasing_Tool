@@ -9,7 +9,7 @@ const leaseSchema = new mongoose.Schema({
     pst: { type: Number, default: 0.08 },
     term_months: { type: Number, default: 48},
     start_date: { type: Date, default: Date.now },
-    payment_frequency: { type: String, default: "Weekly"},
+    payment_frequency: { type: String, default: "WEEKLY"},
     lease_type: { type: String, required: true }
 });
 
