@@ -1,19 +1,20 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Grid, Button } from '@material-ui/core';
-import TableMaterial from './TableMaterial';
+import { Paper, Grid } from '@material-ui/core';
+import LeaseTable from './LeaseTable';
+import LeaseForm from './LeaseForm';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: 50,
+    marginTop: 20,
     flexGrow: 1,
-    marginBottom: 50
+    marginBottom: 20
   },
   paper: {
-    marginTop: 20,
-    marginBottom: 100,  
+    marginTop: 10,
+    marginBottom: 10,  
     textAlign: 'center',
-    padding: theme.spacing(3)
+    padding: theme.spacing(2)
   },
   button: {
       disableElevation: true,
@@ -28,10 +29,8 @@ const LeasePortfolio = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <TableMaterial className={classes.paper}/>
-            <Button variant= 'contained' color='primary'>
-              Add New Lease
-            </Button>
+            <LeaseForm className={classes.paper}/>
+            <LeaseTable className={classes.paper}/>
           </Paper>
         </Grid>
       </Grid>

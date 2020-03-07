@@ -2,12 +2,12 @@ import React from 'react';
 import './App.css';
 
 import Insight from './Components/InsightLayout';
-import LeasePortfolio from './Components/LeasePortfolio';
+import LeaseLayout from './Components/LeaseLayout';
 import About from './Components/About';
 import Home from './Components/Home';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AppNavbarMaterial from './Components/AppNavbarMaterial';
-
+import AppNavbarBottom from './Components/AppNavbarBottom'; 
 
 function App() {
   return (
@@ -17,8 +17,8 @@ function App() {
           <Route path='/' exact component={Home} />
           <Route path='/about' exact component={About} />
           <Route path='/insights' exact component={Insight} />
-          <Route path='/leases' exact component={LeasePortfolio} />
-
+          <Route path='/leases' exact component={LeaseLayout} />
+          <AppNavbarBottom/>
         </div>
       </Router>
   );

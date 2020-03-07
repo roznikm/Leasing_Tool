@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Doughnut } from 'react-chartjs-2';
 
 class InsightChart1 extends Component {
   constructor(props) {
@@ -11,25 +11,12 @@ class InsightChart1 extends Component {
       <div className='app'>
         <div className='row'>
           <div className='mixed-chart'>
-            <Bar
+            <Doughnut
               data={this.props.chartData}
               options={{
                 title: {
                   display: true,
                   text: '# of Leases By Type'
-                },
-                scales: {
-                  yAxes: [
-                    {
-                      ticks: {
-                        beginAtZero: true,
-                        stepSize: 1
-                      }
-                    }
-                  ]
-                },
-                legend: {
-                  display:false
                 }
               }}
             />

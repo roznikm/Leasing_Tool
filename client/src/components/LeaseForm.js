@@ -1,205 +1,173 @@
-import React, { useState, useContext } from 'react';
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText
-} from 'reactstrap';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { GlobalContext } from '../context/GlobalState';
+import { useFormik } from 'formik';
+import {
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  Typography,
+  Container
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import './LeaseFormStyle.css';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    textAlign: 'center',
+    display: 'inline-block'
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(18),
+    fontWeight: theme.typography.fontWeightRegular,
+    textAlign: 'center',
+    display: 'inline-block'
+  },
+  form: {
+    display: 'inline-block'
+  }
+}));
 
 const LeaseForm = () => {
-  const [modal, setModal] = useState(false);
-  const [name, setName] = useState('');
-  const [start_date, setStartDate] = useState('');
-  const [net_lease_price, setNetLeasePrice] = useState(0);
-  const [residual_value, setResidualValue] = useState(0);
-  const [lease_rate_annual, setLeaseRateAnnual] = useState(0);
-  const [gst, setGst] = useState(0.05);
-  const [pst, setPst] = useState(0.06);
-  const [term_months, setTermMonths] = useState(48);
-  const [payment_frequency, setPaymentFrequency] = useState('Weekly');
-  const [lease_type, setLeaseType] = useState('NEW');
+  const classes = useStyles();
+  const formik = useFormik({
+    initialValues: {
+      name: 'John Doe',
+      start_date: Date.now(),
+      net_lease_price: 0,
+      residual_value: 0,
+      lease_rate_annual: 0.049,
+      gst: 0.05,
+      pst: 0.06,
+      term_months: 48,
+      payment_frequency: 'WEEKLY',
+      lease_type: 'NEW'
+    },
+    onSubmit: values => {
+      const newLease = {
+        name: values.name,
+        net_lease_price: values.net_lease_price,
+        residual_value: values.residual_value,
+        lease_rate_annual: values.lease_rate_annual,
+        gst: values.gst,
+        pst: values.pst,
+        term_months: values.term_months,
+        start_date: values.start_date,
+        payment_frequency: values.payment_frequency,
+        lease_type: values.lease_type
+      };
+      console.log(newLease);
+      // Add lease via addLease action
+      addLease(newLease);
+    }
+  });
 
   const { addLease } = useContext(GlobalContext);
 
-  const toggle = () => {
-    setModal(!modal);
-  };
-
-  const onSubmit = e => {
-    e.preventDefault();
-
-    const newLease = {
-      name,
-      net_lease_price,
-      residual_value,
-      lease_rate_annual,
-      gst,
-      pst,
-      term_months,
-      start_date,
-      payment_frequency,
-      lease_type
-    };
-console.log(newLease)
-    // Add lease via addLease action
-    addLease(newLease);
-
-    // Close modal
-    toggle();
-  };
-
   return (
-    <div>
-      <Button color='dark' style={{ marginBottom: '2rem' }} onClick={toggle}>
-        Add Lease
-      </Button>
-
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Add a lease to the portfolio</ModalHeader>
-        <ModalBody>
-          <Form onSubmit={onSubmit}>
-            <FormGroup>
-              <Label for='name'>Customer Name</Label>
-              <Input
-                type='text'
-                name='name'
+    <Container className={classes.root}>
+      <ExpansionPanel className={classes.root}>
+        <div className={classes.heading}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls='panel1a-content'
+            id='panel1a-header'
+          >
+            <Typography className={classes.heading}>Add a New Lease</Typography>
+          </ExpansionPanelSummary>
+        </div>
+        <ExpansionPanelDetails className={classes.root}>
+          <div className={classes.root}>
+            <form onSubmit={formik.handleSubmit} className={classes.form}>
+              <label htmlFor='name'>Customer Name</label>
+              <input
                 id='name'
-                placeholder='Customer name'
-                onChange={e => setName(e.target.value)}
+                name='name'
+                type='text'
+                onChange={formik.handleChange}
+                value={formik.values.name}
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for='net_lease_price'>Net lease price</Label>
-              <Input
-                type='number'
-                step='1'
-                min='0'
-                name='net_lease_price'
+              <label htmlFor='net_lease_price'>Net lease price</label>
+              <input
                 id='net_lease_price'
-                placeholder='0'
-                onChange={e => setNetLeasePrice(e.target.value)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for='residual_value'>Residual value</Label>
-              <Input
+                name='net_lease_price'
                 type='number'
-                step='1'
-                min='0'
-                name='residual_value'
-                id='residual_value'
-                placeholder='0'
-                onChange={e => setResidualValue(e.target.value)}
+                onChange={formik.handleChange}
+                value={formik.values.net_lease_price}
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for='lease_rate_annual'>Lease annual rate</Label>
-              <Input
-                type='number'
-                step='0.001'
-                max='0.15'
-                min='0'
-                name='Lease_annual_rate'
+              <label htmlFor='lease_rate_annual'>Lease annual rate</label>
+              <input
                 id='lease_rate_annual'
-                placeholder='0.050'
-                onChange={e => setLeaseRateAnnual(e.target.value)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for='gst'>GST</Label>
-              <Input
+                name='lease_rate_annual'
                 type='number'
                 step='0.001'
-                max='0.15'
                 min='0'
+                max='0.20'
+                onChange={formik.handleChange}
+                value={formik.values.lease_rate_annual}
+              />
+              <label htmlFor='gst'>GST</label>
+              <input
                 name='gst'
                 id='gst'
-                placeholder='0.050'
-                onChange={e => setGst(e.target.value)}
+                type='number'
+                step='0.001'
+                min='0'
+                max='0.10'
+                onChange={formik.handleChange}
+                value={formik.values.gst}
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for='pst'>PST</Label>
-              <Input
+              <label htmlFor='pst'>PST</label>
+              <input
+                name='pst'
+                id='pst'
                 type='number'
                 step='0.001'
                 max='0.15'
                 min='0'
-                name='pst'
-                id='pst'
-                placeholder='0.080'
-                onChange={e => setPst(e.target.value)}
+                onChange={formik.handleChange}
+                value={formik.values.pst}
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for='term_months'>Term Months</Label>
-              <Input
+              <label htmlFor='term_months'>Term Months</label>
+              <input
                 type='number'
                 step='1'
                 min='0'
                 name='term_months'
                 id='term_months'
                 placeholder='48'
-                onChange={e => setTermMonths(e.target.value)}
+                onChange={formik.handleChange}
+                value={formik.values.term_months}
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for='start_date'>Start date</Label>
-              <Input
+              <label htmlFor='start_date'>Start date</label>
+              <input
                 type='date'
                 name='start_date'
                 id='start_date'
-                placeholder='date placeholder'
-                onChange={e => setStartDate(e.target.value)}
+                onChange={formik.handleChange}
+                value={formik.values.start_date}
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for='payment_frequency'>Payment Frequency</Label>
-              <Input
+              <label htmlFor='payment_frequency'>Payment frequency</label>
+              <select
                 type='select'
                 name='payment_frequency'
                 id='payment_frequency'
-                onChange={e => setPaymentFrequency(e.target.value)}
+                onChange={formik.handleChange}
+                value={formik.values.payment_frequency}
               >
-                <option>Weekly</option>
-                <option>Biweekly</option>
-                <option>Monthly</option>
-              </Input>
-            </FormGroup>
-            <FormGroup>
-              <Label for='lease_type'>Lease type</Label>
-              <Input
-                type='select'
-                name='lease_type'
-                id='lease_type'
-                onChange={e => setLeaseType(e.target.value)}
-              >
-                <option>New</option>
-                <option>Used</option>
-                <option>Short</option>
-              </Input>
-            </FormGroup>
-            <FormGroup>
-              <Button color='dark' style={{ marginTop: '2rem' }} block>
-                Add Lease
-              </Button>
-            </FormGroup>
-          </Form>
-        </ModalBody>
-      </Modal>
-    </div>
+                <option value='' label='Select a payment frequency' />
+                <option value='WEEKLY' label='Weekly' />
+                <option value='BIWEEKLY' label='Bi-Weekly' />
+                <option value='MONTHLY' label='Monthly' />
+              </select>
+              <br />
+              <button type='submit'>Submit</button>
+            </form>
+          </div>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    </Container>
   );
 };
 
 export default LeaseForm;
-
-// LeaseForm.propTypes = {
-//   addLease: PropTypes.func.isRequired,
-// };

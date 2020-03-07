@@ -8,21 +8,19 @@ import {
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
-  makeStyles,
-  hexToRgb
+  makeStyles
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import color from '@material-ui/core/colors/amber';
 
 // expansion panel
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: "#FF000",
-    width: '90%',
-    height: '90%',
-    outlineStyle: 'solid',
-    outlineWidth: 1,
-    outlineColor: 'rgb(33.7%, 37%, 33.7%)'
+    width: '100%',
+    height: '90%'
+    // outlineStyle: 'solid',
+    // outlineWidth: 1
+    //outlineColor: 'rgb(33.7%, 37%, 33.7%)'
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -30,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TableMaterial = () => {
+const LeaseTable = () => {
   const classes = useStyles();
   const { leases, deleteLease, selectId, getLeases } = useContext(
     GlobalContext
@@ -51,6 +49,10 @@ const TableMaterial = () => {
         sort: false,
         download: false
       }
+    },
+    {
+      name: 'start_date',
+      label: 'Start Date'
     },
     {
       name: 'name',
@@ -94,15 +96,11 @@ const TableMaterial = () => {
     filterType: 'dropdown',
     responsive: 'scroll',
     selectableRows: 'single',
+    selectableRowsOnClick: true,
     elevation: 0,
     onRowsDelete: index => {
       const dat = leases[index.data['0'].index];
       deleteLease(dat._id);
-    },
-    onRowClick: index => {
-      const id = index[0];
-      selectId(id);
-      //window.location.href='/report';
     }
   };
 
@@ -127,4 +125,4 @@ const TableMaterial = () => {
   );
 };
 
-export default TableMaterial;
+export default LeaseTable;
