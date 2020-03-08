@@ -1,67 +1,34 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import { GlobalContext } from '../context/GlobalState';
-import InsightChart1 from './InsightChart1';
+import InsightContainer1 from './InsightContainer1';
+import InsightContainer2 from './InsightContainer2';
+import { Card, CardContent, CardHeader, Paper, Grid } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: 50,
-    flexGrow: 1
+    flexGrow: 1,
+    maxWidth: '100%'
   },
   paper: {
     marginTop: 20,
     marginBottom: 20,
     textAlign: 'center',
-    padding: theme.spacing(2)
+    padding: theme.spacing(1)
+  },
+  card: {
+    marginTop: 20,
+    marginBottom: 20,
+    textAlign: 'center',
+    padding: theme.spacing(1)
+  },
+  cardHeader: {
+    fontSize: "0.875em"
   }
 }));
 
-const Insight = () => {
+const InsightLayout = () => {
   const classes = useStyles();
-  const { leases, getLeases } = useContext(GlobalContext);
-  const newData = [];
-  const newCar = [];
-  const usedCar = [];
-  const otherCar = [];
-  leases.map(item => {
-    if (item.lease_type === 'NEW') {
-      newCar.push(item.lease_type);
-    } else if (item.lease_type === 'USED') {
-      usedCar.push(item.lease_type);
-    } else {
-      otherCar.push(item.lease_type);
-    }
-  });
-  newData.push(newCar.length);
-  newData.push(usedCar.length);
-  newData.push(otherCar.length);
-
-  const chartData = {
-    labels: ['New', 'Used', 'Short-Term'],
-    datasets: [
-      {
-        data: newData,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)'
-        ],
-        borderWidth: 1
-      }]
-  };
-
-  useEffect(() => {
-    getLeases();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -69,24 +36,29 @@ const Insight = () => {
           <Paper className={classes.paper}>one</Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper className={classes.paper}>Pane 2 </Paper>
+          <Paper className={classes.paper}>2</Paper>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={8}>
+          <Card className={classes.card}>
+            <CardHeader 
+            title={'Leases expiring soon'}
+            subheader={'Give them a call'}
+            classes={classes.cardHeader}/>
+            <CardContent>
+            <InsightContainer2 />
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid item xs={4}>
           <Paper className={classes.paper}>
-            <InsightChart1
-              chartData={chartData}
-
-              className={classes.paper}
-            />
+            <InsightContainer1 />
+            <InsightContainer1 />
           </Paper>
-        </Grid>
-
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>Panel 4</Paper>
         </Grid>
       </Grid>
     </div>
   );
 };
 
-export default Insight;
+export default InsightLayout;

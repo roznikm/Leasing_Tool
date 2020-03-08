@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import Insight from './Components/InsightLayout';
+import InsightLayout from './Components/InsightLayout';
 import LeaseLayout from './Components/LeaseLayout';
 import About from './Components/About';
 import Home from './Components/Home';
@@ -16,7 +16,7 @@ function App() {
           <AppNavbarMaterial />
           <Route path='/' exact component={Home} />
           <Route path='/about' exact component={About} />
-          <Route path='/insights' exact component={Insight} />
+          <Route path='/insights' exact component={InsightLayout} />
           <Route path='/leases' exact component={LeaseLayout} />
           <AppNavbarBottom/>
         </div>

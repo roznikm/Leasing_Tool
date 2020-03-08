@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     display: 'inline-block'
   },
   heading: {
-    fontSize: theme.typography.pxToRem(18),
+    fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
     textAlign: 'center',
     display: 'inline-block'
@@ -73,7 +73,7 @@ const LeaseForm = () => {
             aria-controls='panel1a-content'
             id='panel1a-header'
           >
-            <Typography className={classes.heading}>Add a New Lease</Typography>
+            <Typography className={classes.heading} variant='button' >Add a New Lease</Typography>
           </ExpansionPanelSummary>
         </div>
         <ExpansionPanelDetails className={classes.root}>
