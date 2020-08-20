@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@mui-treasury/styles": "^1.0.0",
-    "bcrypt": "^4.0.0",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "colors": "^1.4.0",
     "concurrently": "^5.1.0",
